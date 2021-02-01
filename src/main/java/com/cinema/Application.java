@@ -26,13 +26,13 @@ public class Application {
         movieService.add(movie2);
         //Cinemahalls
         CinemaHall cinemaHall1 = new CinemaHall();
-        cinemaHall1.setDescription("cinema hall 1");
+        cinemaHall1.setDescription("ch1");
         cinemaHall1.setCapacity(100);
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
         cinemaHallService.add(cinemaHall1);
         CinemaHall cinemaHall2 = new CinemaHall();
-        cinemaHall2.setDescription("cinema hall 2");
+        cinemaHall2.setDescription("ch2");
         cinemaHall2.setCapacity(200);
         cinemaHallService.add(cinemaHall2);
         System.out.println(cinemaHallService.getAll());
@@ -60,7 +60,7 @@ public class Application {
         MovieSession movieSession4 = new MovieSession();
         movieSession4.setShowTime(movie2Time);
         movieSession4.setMovie(movie1);
-        movieSession3.setCinemaHall(cinemaHall2);
+        movieSession4.setCinemaHall(cinemaHall2);
         movieSessionService.add(movieSession4);
         System.out.println("Available movie sessions are: \n"
                 + movieSessionService.findAvailableSessions(1L, LocalDate.now()));
