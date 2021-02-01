@@ -5,13 +5,12 @@ import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Dao;
 import com.cinema.model.MovieSession;
 import com.cinema.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -25,7 +24,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .setParameter("movieId", movieId).setParameter("from", fromDateTime)
                     .setParameter("to", toDateTime).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Unable to retrieve all MovieSessions from DB", e);
+            throw new DataProcessingException("Unable to get available MovieSessions from DB", e);
         }
     }
 
@@ -48,17 +47,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (session != null) {
                 session.close();
             }
-        }
-    }
-
-    @Override
-    public List<MovieSession> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> allMovieSessionsQuery = session.createQuery("from movie_sessions ",
-                    MovieSession.class);
-            return allMovieSessionsQuery.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Unable to retrieve all MovieSessions from DB", e);
         }
     }
 }

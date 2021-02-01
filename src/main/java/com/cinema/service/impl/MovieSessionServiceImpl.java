@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
     @Inject
-    MovieSessionDao movieSessionDao;
+    private MovieSessionDao movieSessionDao;
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
@@ -21,10 +21,5 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession add(MovieSession session) {
         return movieSessionDao.add(session);
-    }
-
-    @Override
-    public List<MovieSession> getAll() {
-        return movieSessionDao.getAll();
     }
 }
