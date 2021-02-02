@@ -14,7 +14,7 @@ public class Application {
     private static Injector injector = Injector.getInstance("com.cinema");
 
     public static void main(String[] args) {
-        // Movies
+        //Movies
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         Movie movie1 = new Movie();
         movie1.setTitle("Empire strikes back");
@@ -63,6 +63,6 @@ public class Application {
         movieSession4.setCinemaHall(cinemaHall2);
         movieSessionService.add(movieSession4);
         System.out.println("Available movie sessions are: \n"
-                + movieSessionService.findAvailableSessions(1L, LocalDate.now()));
+                + movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.now()));
     }
 }

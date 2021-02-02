@@ -16,11 +16,13 @@ import org.hibernate.Transaction;
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalDateTime fromDateTime = LocalDateTime.of(date, LocalTime.of(0,0));
-        LocalDateTime toDateTime = LocalDateTime.of(date, LocalTime.of(23,59, 59));
+        LocalDateTime fromDateTime = LocalDateTime.of(date, LocalTime.MIN);
+        LocalDateTime toDateTime = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM movie_sessions WHERE movie.id=:movieId "
-                            + "AND showTime BETWEEN :from AND :to", MovieSession.class)
+            return session.createQuery("FROM MovieSession ms "
+                    + "INNER JOIN FETCH ms.movie AS m "
+                    + "INNER JOIN FETCH ms.cinemaHall "
+                    + "WHERE m.id=:movieId AND showTime BETWEEN :from AND :to", MovieSession.class)
                     .setParameter("movieId", movieId).setParameter("from", fromDateTime)
                     .setParameter("to", toDateTime).getResultList();
         } catch (Exception e) {
