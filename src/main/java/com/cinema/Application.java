@@ -1,9 +1,13 @@
 package com.cinema;
 
+import com.cinema.exception.AuthenticationException;
+import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.User;
+import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
@@ -64,5 +68,24 @@ public class Application {
         movieSessionService.add(movieSession4);
         System.out.println("Available movie sessions are: \n"
                 + movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.now()));
+        //Users
+        AuthenticationService authService = (AuthenticationService) injector
+                .getInstance(AuthenticationService.class);
+        try {
+            User user1 = authService.register("kkk@gmail.com", "123456");
+            System.out.println("New user:" + user1);
+            User user2 = authService.register("kkkk@gmail.com", "123456");
+            System.out.println("New user:" + user2);
+        } catch (DataProcessingException e) {
+            System.out.println(e.getMessage() + "\nEnter another email please!");
+        }
+        try {
+            User user1Back = authService.login("kkk@gmail.com", "123456");
+            System.out.println("User from DB:" + user1Back);
+            User user1BackWrongLogin = authService.login("kk@gmail.com", "123456");
+            User user1BackWrongPassword = authService.login("kkk@gmail.com", "12345");
+        } catch (AuthenticationException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
