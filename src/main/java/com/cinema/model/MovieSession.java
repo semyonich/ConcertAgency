@@ -8,17 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "movie_sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movies_id")
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinemahall_id")
+    @JoinColumn(name = "cinema_halls_id")
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
