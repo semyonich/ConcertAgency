@@ -22,7 +22,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return session.createQuery("FROM MovieSession ms "
                     + "INNER JOIN FETCH ms.movie AS m "
                     + "INNER JOIN FETCH ms.cinemaHall "
-                    + "WHERE m.id=:movieId AND showtime BETWEEN :from AND :to", MovieSession.class)
+                    + "WHERE m.id=:movieId AND showTime BETWEEN :from AND :to", MovieSession.class)
                     .setParameter("movieId", movieId).setParameter("from", fromDateTime)
                     .setParameter("to", toDateTime).getResultList();
         } catch (Exception e) {
