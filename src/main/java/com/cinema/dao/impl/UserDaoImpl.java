@@ -17,7 +17,7 @@ public class UserDaoImpl implements UserDao {
             return session.createQuery("FROM User WHERE email=:email", User.class)
                     .setParameter("email", email).uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Unable to retrieve all Movies from DB", e);
+            throw new DataProcessingException("Unable to find User with email=" + email, e);
         }
     }
 }
