@@ -4,14 +4,17 @@ import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.Order;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Application {
     private static Injector injector = Injector.getInstance("com.cinema");
@@ -66,6 +69,19 @@ public class Application {
         shoppingCartService.addSession(movieSession2, user2);
         shoppingCartService.addSession(movieSession2, user1);
         ShoppingCart user1ShoppingCart = shoppingCartService.getByUser(user1);
-        shoppingCartService.clear(user1ShoppingCart);
+        ShoppingCart user2ShoppingCart = shoppingCartService.getByUser(user2);
+        shoppingCartService.clear(user2ShoppingCart);
+        System.out.println("=============Order tests==============");
+        OrderService orderService = (OrderService) injector
+                .getInstance(OrderService.class);
+        orderService.completeOrder(user1ShoppingCart);
+        shoppingCartService.addSession(movieSession1, user1);
+        user1ShoppingCart = shoppingCartService.getByUser(user1);
+        orderService.completeOrder(user1ShoppingCart);
+        orderService.completeOrder(user2ShoppingCart);
+        List<Order> orders1 = orderService.getOrdersHistory(user1);
+        List<Order> orders2 = orderService.getOrdersHistory(user2);
+        System.out.println(orders1);
+        System.out.println(orders2);
     }
 }
