@@ -70,10 +70,13 @@ public class Application {
         shoppingCartService.addSession(movieSession2, user1);
         ShoppingCart user1ShoppingCart = shoppingCartService.getByUser(user1);
         ShoppingCart user2ShoppingCart = shoppingCartService.getByUser(user2);
-        //shoppingCartService.clear(user1ShoppingCart);
+        shoppingCartService.clear(user2ShoppingCart);
         System.out.println("=============Order tests==============");
         OrderService orderService = (OrderService) injector
                 .getInstance(OrderService.class);
+        orderService.completeOrder(user1ShoppingCart);
+        shoppingCartService.addSession(movieSession1, user1);
+        user1ShoppingCart = shoppingCartService.getByUser(user1);
         orderService.completeOrder(user1ShoppingCart);
         orderService.completeOrder(user2ShoppingCart);
         List<Order> orders1 = orderService.getOrdersHistory(user1);
