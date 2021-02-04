@@ -1,24 +1,23 @@
 package com.cinema;
 
-import com.cinema.exception.AuthenticationException;
-import com.cinema.exception.DataProcessingException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
-import java.time.LocalDate;
+import com.cinema.service.ShoppingCartService;
 import java.time.LocalDateTime;
 
 public class Application {
     private static Injector injector = Injector.getInstance("com.cinema");
 
     public static void main(String[] args) {
-        //Movies
+        System.out.println("=============Movies tests==============");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         Movie movie1 = new Movie();
         movie1.setTitle("Empire strikes back");
@@ -28,7 +27,7 @@ public class Application {
         movie2.setTitle("DeadPool-2");
         movie2.setDescription("Spiderman like");
         movieService.add(movie2);
-        //Cinemahalls
+        System.out.println("=============CinemaHalls tests==============");
         CinemaHall cinemaHall1 = new CinemaHall();
         cinemaHall1.setDescription("ch1");
         cinemaHall1.setCapacity(100);
@@ -40,7 +39,7 @@ public class Application {
         cinemaHall2.setCapacity(200);
         cinemaHallService.add(cinemaHall2);
         System.out.println(cinemaHallService.getAll());
-        //MovieSessions
+        System.out.println("=============MovieSessions tests==============");
         MovieSession movieSession1 = new MovieSession();
         LocalDateTime movie1Time = LocalDateTime.now();
         movieSession1.setShowTime(movie1Time);
@@ -55,37 +54,18 @@ public class Application {
         movieSession2.setMovie(movie2);
         movieSession2.setCinemaHall(cinemaHall1);
         movieSessionService.add(movieSession2);
-        MovieSession movieSession3 = new MovieSession();
-        LocalDateTime movie3Time = LocalDateTime.now().plusDays(3);
-        movieSession3.setShowTime(movie3Time);
-        movieSession3.setMovie(movie1);
-        movieSession3.setCinemaHall(cinemaHall1);
-        movieSessionService.add(movieSession3);
-        MovieSession movieSession4 = new MovieSession();
-        movieSession4.setShowTime(movie2Time);
-        movieSession4.setMovie(movie1);
-        movieSession4.setCinemaHall(cinemaHall2);
-        movieSessionService.add(movieSession4);
-        System.out.println("Available movie sessions are: \n"
-                + movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.now()));
-        //Users
+        System.out.println("=============Users tests==============");
         AuthenticationService authService = (AuthenticationService) injector
                 .getInstance(AuthenticationService.class);
-        try {
-            User user1 = authService.register("kkk@gmail.com", "123456");
-            System.out.println("New user:" + user1);
-            User user2 = authService.register("kkkk@gmail.com", "123456");
-            System.out.println("New user:" + user2);
-        } catch (DataProcessingException e) {
-            System.out.println(e.getMessage() + "\nEnter another email please!");
-        }
-        try {
-            User user1Back = authService.login("kkk@gmail.com", "123456");
-            System.out.println("User from DB:" + user1Back);
-            User user1BackWrongLogin = authService.login("kk@gmail.com", "123456");
-            User user1BackWrongPassword = authService.login("kkk@gmail.com", "12345");
-        } catch (AuthenticationException e) {
-            System.out.println(e.getMessage());
-        }
+        User user1 = authService.register("kkk@gmail.com", "123456");
+        User user2 = authService.register("serhii@gmail.com", "123456");
+        System.out.println("=============ShoppingCart & Tickets tests==============");
+        ShoppingCartService shoppingCartService = (ShoppingCartService) injector
+                .getInstance(ShoppingCartService.class);
+        shoppingCartService.addSession(movieSession1, user1);
+        shoppingCartService.addSession(movieSession2, user2);
+        shoppingCartService.addSession(movieSession2, user1);
+        ShoppingCart user1ShoppingCart = shoppingCartService.getByUser(user1);
+        shoppingCartService.clear(user1ShoppingCart);
     }
 }
