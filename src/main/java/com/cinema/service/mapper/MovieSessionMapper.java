@@ -25,7 +25,9 @@ public class MovieSessionMapper {
         movieSessionResponseDto.setId(movieSession.getId());
         movieSessionResponseDto.setMovie(movieSession.getMovie().getTitle());
         movieSessionResponseDto.setCinemaHall(movieSession.getCinemaHall().getDescription());
-        movieSessionResponseDto.setShowTime(movieSession.getShowTime());
+        String showTime = movieSession.getShowTime()
+                .format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
+        movieSessionResponseDto.setShowTime(showTime);
         return movieSessionResponseDto;
     }
 

@@ -1,12 +1,10 @@
 package com.cinema.model.dto;
 
-import java.time.LocalDateTime;
-
 public class MovieSessionResponseDto {
     private Long id;
     private String movie;
     private String cinemaHall;
-    private LocalDateTime showTime;
+    private String showTime;
 
     public Long getId() {
         return id;
@@ -32,11 +30,11 @@ public class MovieSessionResponseDto {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getShowTime() {
+    public String getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(LocalDateTime showTime) {
+    public void setShowTime(String showTime) {
         this.showTime = showTime;
     }
 }
