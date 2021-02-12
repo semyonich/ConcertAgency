@@ -41,7 +41,7 @@ public class AppConfig {
         props.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         factoryBean.setHibernateProperties(props);
-        factoryBean.setPackagesToScan("com.spring.model");
+        factoryBean.setPackagesToScan("com.cinema.model");
         return factoryBean;
     }
 }
