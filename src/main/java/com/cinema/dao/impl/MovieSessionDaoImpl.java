@@ -59,19 +59,20 @@ public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession> implement
     }
 
     @Override
-    public void remove(MovieSession movieSession) {
+    public void removeById(Long id) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.remove(movieSession);
+            session.createQuery("DELETE FROM MovieSession ms WHERE ms.id=:id")
+            .setParameter("id", id).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Unable to remove " + movieSession, e);
+            throw new DataProcessingException("Unable to remove movieSession with id=" + id, e);
         } finally {
             if (session != null) {
                 session.close();

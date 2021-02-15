@@ -9,5 +9,5 @@ public interface MovieSessionDao extends AbstractDao<MovieSession> {
 
     void update(MovieSession movieSession);
 
-    void remove(MovieSession movieSession);
+    void removeById(Long id);
 }

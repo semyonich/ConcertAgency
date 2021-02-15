@@ -56,10 +56,7 @@ public class MovieSessionController {
     }
 
     @DeleteMapping("/{id}")
-    public void removeMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto,
-                                   @PathVariable Long id) {
-        MovieSession movieSession = movieSessionMapper.makeEntity(movieSessionRequestDto);
-        movieSession.setId(id);
-        movieSessionService.remove(movieSession);
+    public void removeMovieSession(@PathVariable Long id) {
+        movieSessionService.removeById(id);
     }
 }
