@@ -24,7 +24,7 @@ public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession> implement
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         LocalDateTime fromDateTime = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime toDateTime = LocalDateTime.of(date, LocalTime.MAX);
-        try (Session session = getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM MovieSession ms "
                     + "INNER JOIN FETCH ms.movie AS m "
                     + "INNER JOIN FETCH ms.cinemaHall "
@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession> implement
         Transaction transaction = null;
         Session session = null;
         try {
-            session = getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(movieSession);
             transaction.commit();
@@ -63,7 +63,7 @@ public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession> implement
         Transaction transaction = null;
         Session session = null;
         try {
-            session = getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.createQuery("DELETE FROM MovieSession ms WHERE ms.id=:id")
             .setParameter("id", id).executeUpdate();

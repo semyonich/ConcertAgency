@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
-    private final SessionFactory sessionFactory;
+    protected final SessionFactory sessionFactory;
 
     public AbstractDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -33,9 +33,5 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
                 session.close();
             }
         }
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }

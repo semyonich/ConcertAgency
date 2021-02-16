@@ -19,7 +19,7 @@ public class CinemaHallDaoImpl extends AbstractDaoImpl<CinemaHall> implements Ci
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<CinemaHall> allCinemaHallsQuery = session
                     .createQuery("FROM CinemaHall", CinemaHall.class);
             return allCinemaHallsQuery.getResultList();
@@ -30,7 +30,7 @@ public class CinemaHallDaoImpl extends AbstractDaoImpl<CinemaHall> implements Ci
 
     @Override
     public CinemaHall getById(Long id) {
-        try (Session session = getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM CinemaHall ch WHERE ch.id=:id", CinemaHall.class)
                     .setParameter("id", id).getSingleResult();
         } catch (Exception e) {

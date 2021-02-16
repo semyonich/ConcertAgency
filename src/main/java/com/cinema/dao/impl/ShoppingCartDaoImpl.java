@@ -19,7 +19,7 @@ public class ShoppingCartDaoImpl extends AbstractDaoImpl<ShoppingCart> implement
 
     @Override
     public ShoppingCart getByUser(User user) {
-        try (Session session = getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM ShoppingCart sc "
                     + "LEFT JOIN FETCH sc.tickets "
                     + "WHERE sc.user=:user", ShoppingCart.class)
@@ -34,7 +34,7 @@ public class ShoppingCartDaoImpl extends AbstractDaoImpl<ShoppingCart> implement
         Transaction transaction = null;
         Session session = null;
         try {
-            session = getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(shoppingCart);
             transaction.commit();

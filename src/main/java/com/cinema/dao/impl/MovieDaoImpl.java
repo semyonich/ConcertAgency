@@ -19,7 +19,7 @@ public class MovieDaoImpl extends AbstractDaoImpl<Movie> implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        try (Session session = getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Movie> allMoviesQuery = session.createQuery("FROM Movie", Movie.class);
             return allMoviesQuery.getResultList();
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class MovieDaoImpl extends AbstractDaoImpl<Movie> implements MovieDao {
 
     @Override
     public Movie getById(Long id) {
-        try (Session session = getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Movie m WHERE m.id=:id", Movie.class)
                     .setParameter("id", id).getSingleResult();
         } catch (Exception e) {
