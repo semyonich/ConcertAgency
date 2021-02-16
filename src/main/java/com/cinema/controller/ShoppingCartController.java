@@ -43,7 +43,6 @@ public class ShoppingCartController {
         shoppingCartService.addSession(movieSession, user);
     }
 
-    //Get by user - GET: /shopping-carts/by-user?userId
     @GetMapping("/by-user")
     ShoppingCartResponseDto getUserCart(@RequestParam Long userId) {
         ShoppingCart userCart = shoppingCartService.findById(userId)
