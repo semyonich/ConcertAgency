@@ -6,37 +6,14 @@ import com.cinema.model.User;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
-    private final SessionFactory sessionFactory;
-
+public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
+    @Autowired
     public UserDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public User add(User user) {
-        Transaction transaction = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-            return user;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Unable to add " + user + "to DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        super(sessionFactory);
     }
 
     @Override

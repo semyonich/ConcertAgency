@@ -7,36 +7,14 @@ import com.cinema.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ShoppingCartDaoImpl implements ShoppingCartDao {
-    private final SessionFactory sessionFactory;
-
+public class ShoppingCartDaoImpl extends AbstractDaoImpl<ShoppingCart> implements ShoppingCartDao {
+    @Autowired
     public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public ShoppingCart add(ShoppingCart shoppingCart) {
-        Transaction transaction = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(shoppingCart);
-            transaction.commit();
-            return shoppingCart;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Unable to add " + shoppingCart + "to DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        super(sessionFactory);
     }
 
     @Override

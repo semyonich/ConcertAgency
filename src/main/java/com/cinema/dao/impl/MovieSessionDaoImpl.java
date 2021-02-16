@@ -10,36 +10,14 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MovieSessionDaoImpl implements MovieSessionDao {
-    private final SessionFactory sessionFactory;
-
+public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession> implements MovieSessionDao {
+    @Autowired
     public MovieSessionDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public MovieSession add(MovieSession movieSession) {
-        Transaction transaction = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(movieSession);
-            transaction.commit();
-            return movieSession;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Unable to add " + movieSession + "to DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        super(sessionFactory);
     }
 
     @Override
@@ -50,11 +28,55 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return session.createQuery("FROM MovieSession ms "
                     + "INNER JOIN FETCH ms.movie AS m "
                     + "INNER JOIN FETCH ms.cinemaHall "
-                    + "WHERE m.id=:movieId AND showTime BETWEEN :from AND :to", MovieSession.class)
+                    + "WHERE m.id=:movieId AND ms.showTime BETWEEN :from AND :to",
+                    MovieSession.class)
                     .setParameter("movieId", movieId).setParameter("from", fromDateTime)
                     .setParameter("to", toDateTime).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Unable to get available MovieSessions from DB", e);
+        }
+    }
+
+    @Override
+    public void update(MovieSession movieSession) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.update(movieSession);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Unable to update " + movieSession, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public void removeById(Long id) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.createQuery("DELETE FROM MovieSession ms WHERE ms.id=:id")
+            .setParameter("id", id).executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Unable to remove movieSession with id=" + id, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }

@@ -7,37 +7,14 @@ import com.cinema.model.User;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OrderDaoImpl implements OrderDao {
-    private final SessionFactory sessionFactory;
-
+public class OrderDaoImpl extends AbstractDaoImpl<Order> implements OrderDao {
+    @Autowired
     public OrderDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public Order add(Order order) {
-        Transaction transaction = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(order);
-            transaction.commit();
-            return order;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Unable to add " + order + "to DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        super(sessionFactory);
     }
 
     @Override
