@@ -3,11 +3,10 @@ package com.cinema.service.mapper;
 import com.cinema.model.Order;
 import com.cinema.model.Ticket;
 import com.cinema.model.dto.OrderResponseDto;
-import org.springframework.stereotype.Component;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMapper {

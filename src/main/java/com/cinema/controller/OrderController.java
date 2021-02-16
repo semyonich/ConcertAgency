@@ -6,13 +6,13 @@ import com.cinema.model.dto.OrderResponseDto;
 import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.mapper.OrderMapper;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")
@@ -21,7 +21,8 @@ public class OrderController {
     private final OrderMapper orderMapper;
     private final ShoppingCartService shoppingCartService;
 
-    public OrderController(OrderService orderService, OrderMapper orderMapper, ShoppingCartService shoppingCartService) {
+    public OrderController(OrderService orderService, OrderMapper orderMapper,
+                           ShoppingCartService shoppingCartService) {
         this.orderService = orderService;
         this.orderMapper = orderMapper;
         this.shoppingCartService = shoppingCartService;

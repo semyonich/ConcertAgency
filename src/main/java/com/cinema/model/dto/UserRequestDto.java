@@ -1,6 +1,5 @@
 package com.cinema.model.dto;
 
-
 public class UserRequestDto {
     private String email;
     private String password;

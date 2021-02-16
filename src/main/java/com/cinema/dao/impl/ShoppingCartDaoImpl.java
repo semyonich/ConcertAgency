@@ -4,13 +4,12 @@ import com.cinema.dao.ShoppingCartDao;
 import com.cinema.exception.DataProcessingException;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public class ShoppingCartDaoImpl extends AbstractDaoImpl<ShoppingCart> implements ShoppingCartDao {
@@ -55,9 +54,9 @@ public class ShoppingCartDaoImpl extends AbstractDaoImpl<ShoppingCart> implement
     @Override
     public Optional<ShoppingCart> findById(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("FROM ShoppingCart sc "
-                                         + "LEFT JOIN FETCH sc.tickets WHERE sc.id=:id", ShoppingCart.class)
-                    .setParameter("id", id).uniqueResultOptional();
+            return session
+                    .createQuery("FROM ShoppingCart sc LEFT JOIN FETCH sc.tickets WHERE sc.id=:id",
+                    ShoppingCart.class).setParameter("id", id).uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Unable to find ShoppingCart with id=" + id, e);
         }

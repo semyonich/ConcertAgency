@@ -1,6 +1,5 @@
 package com.cinema.model.dto;
 
-
 public class UserResponseDto {
     private Long id;
     private String email;
