@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface OrderDao extends AbstractDao<Order> {
     List<Order> getOrdersHistory(User user);
+
+    List<Order> getOrdersHistory(Long userId);
 }

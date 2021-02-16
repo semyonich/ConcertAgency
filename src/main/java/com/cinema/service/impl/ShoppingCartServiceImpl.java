@@ -9,6 +9,8 @@ import com.cinema.model.User;
 import com.cinema.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartDao shoppingCartDao;
@@ -46,5 +48,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void clear(ShoppingCart shoppingCart) {
         shoppingCart.getTickets().clear();
         shoppingCartDao.update(shoppingCart);
+    }
+
+    @Override
+    public Optional<ShoppingCart> findById(Long id) {
+        return shoppingCartDao.findById(id);
     }
 }

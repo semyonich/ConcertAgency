@@ -3,6 +3,7 @@ package com.cinema.dao;
 import com.cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface MovieSessionDao extends AbstractDao<MovieSession> {
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
@@ -10,4 +11,6 @@ public interface MovieSessionDao extends AbstractDao<MovieSession> {
     void update(MovieSession movieSession);
 
     void removeById(Long id);
+
+    Optional<MovieSession> findById(Long id);
 }

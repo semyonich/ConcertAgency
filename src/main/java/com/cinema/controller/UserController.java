@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/by-email")
     public UserResponseDto findUserByEmail(@RequestParam String email) {
         User user = userService.findByEmail(email)
-                .orElseThrow(() -> new DataProcessingException("User dont exist"));
+                .orElseThrow(() -> new DataProcessingException("User don't exist"));
         return userMapper.makeDto(user);
     }
 }
