@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -77,6 +78,16 @@ public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession> implement
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public Optional<MovieSession> get(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM MovieSession WHERE id=:id", MovieSession.class)
+                    .setParameter("id", id).uniqueResultOptional();
+        } catch (Exception e) {
+            throw new DataProcessingException("Unable to find MovieSession with id=" + id, e);
         }
     }
 }
