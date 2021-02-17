@@ -12,5 +12,5 @@ public interface MovieSessionDao extends AbstractDao<MovieSession> {
 
     void removeById(Long id);
 
-    Optional<MovieSession> findById(Long id);
+    Optional<MovieSession> get(Long id);
 }

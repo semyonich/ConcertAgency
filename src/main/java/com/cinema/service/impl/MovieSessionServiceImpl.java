@@ -1,11 +1,11 @@
 package com.cinema.service.impl;
 
 import com.cinema.dao.MovieSessionDao;
+import com.cinema.exception.DataProcessingException;
 import com.cinema.model.MovieSession;
 import com.cinema.service.MovieSessionService;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +37,9 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public Optional<MovieSession> findById(Long movieSessionId) {
-        return movieSessionDao.findById(movieSessionId);
+    public MovieSession get(Long movieSessionId) {
+        return movieSessionDao.get(movieSessionId)
+                .orElseThrow(() -> new DataProcessingException("MovieSession don't exist, id="
+                        + movieSessionId));
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class OrderMapper {
     private static final String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
 
-    public OrderResponseDto toDto(Order order) {
+    public OrderResponseDto makeDto(Order order) {
         OrderResponseDto orderDto = new OrderResponseDto();
         orderDto.setId(order.getId());
         orderDto.setUserEmail(order.getUser().getEmail());

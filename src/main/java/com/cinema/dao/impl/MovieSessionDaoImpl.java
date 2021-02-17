@@ -82,7 +82,7 @@ public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession> implement
     }
 
     @Override
-    public Optional<MovieSession> findById(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM MovieSession WHERE id=:id", MovieSession.class)
                     .setParameter("id", id).uniqueResultOptional();

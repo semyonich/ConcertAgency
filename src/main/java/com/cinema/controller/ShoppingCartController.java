@@ -35,18 +35,17 @@ public class ShoppingCartController {
 
     @PostMapping("/movie-sessions")
     public void addMovieSession(@RequestParam Long userId, @RequestParam Long movieSessionId) {
-        User user = userService.findById(userId)
+        User user = userService.get(userId)
                 .orElseThrow(() -> new DataProcessingException("User don't exist, id=" + userId));
-        MovieSession movieSession = movieSessionService.findById(movieSessionId)
-                .orElseThrow(() -> new DataProcessingException("MovieSession don't exist, id="
-                        + movieSessionId));
+        MovieSession movieSession = movieSessionService.get(movieSessionId);
         shoppingCartService.addSession(movieSession, user);
     }
 
     @GetMapping("/by-user")
     ShoppingCartResponseDto getUserCart(@RequestParam Long userId) {
-        ShoppingCart userCart = shoppingCartService.findById(userId)
-                .orElseThrow(() -> new DataProcessingException("ShoppingCart don't exist"));
+        User user = userService.get(userId)
+                .orElseThrow(() -> new DataProcessingException("User don't exist, id=" + userId));
+        ShoppingCart userCart = shoppingCartService.getByUser(user);
         return mapper.makeDto(userCart);
     }
 }

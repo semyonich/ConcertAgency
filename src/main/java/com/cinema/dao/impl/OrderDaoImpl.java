@@ -32,17 +32,4 @@ public class OrderDaoImpl extends AbstractDaoImpl<Order> implements OrderDao {
             throw new DataProcessingException("Unable to get Orders made by " + user, e);
         }
     }
-
-    @Override
-    public List<Order> getOrdersHistory(Long userId) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("SELECT DISTINCT o FROM Order o "
-                    + "LEFT JOIN FETCH o.tickets AS t "
-                    + "LEFT JOIN FETCH o.user AS u "
-                    + "WHERE u.id=:userId", Order.class)
-                    .setParameter("userId", userId).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Unable to get Orders made by user, id=" + userId, e);
-        }
-    }
 }
