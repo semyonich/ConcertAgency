@@ -1,6 +1,5 @@
 package com.cinema.controller;
 
-import com.cinema.exception.DataProcessingException;
 import com.cinema.model.MovieSession;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
@@ -35,16 +34,14 @@ public class ShoppingCartController {
 
     @PostMapping("/movie-sessions")
     public void addMovieSession(@RequestParam Long userId, @RequestParam Long movieSessionId) {
-        User user = userService.get(userId)
-                .orElseThrow(() -> new DataProcessingException("User don't exist, id=" + userId));
+        User user = userService.get(userId);
         MovieSession movieSession = movieSessionService.get(movieSessionId);
         shoppingCartService.addSession(movieSession, user);
     }
 
     @GetMapping("/by-user")
     ShoppingCartResponseDto getUserCart(@RequestParam Long userId) {
-        User user = userService.get(userId)
-                .orElseThrow(() -> new DataProcessingException("User don't exist, id=" + userId));
+        User user = userService.get(userId);
         ShoppingCart userCart = shoppingCartService.getByUser(user);
         return mapper.makeDto(userCart);
     }

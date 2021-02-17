@@ -1,6 +1,7 @@
 package com.cinema.service.impl;
 
 import com.cinema.dao.UserDao;
+import com.cinema.exception.DataProcessingException;
 import com.cinema.model.User;
 import com.cinema.service.UserService;
 import com.cinema.util.HashUtil;
@@ -30,7 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> get(Long id) {
-        return userDao.get(id);
+    public User get(Long userId) {
+        return userDao.get(userId)
+                .orElseThrow(() -> new DataProcessingException("User don't exist, id=" + userId));
     }
 }

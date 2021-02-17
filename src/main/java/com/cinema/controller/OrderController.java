@@ -1,6 +1,5 @@
 package com.cinema.controller;
 
-import com.cinema.exception.DataProcessingException;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 import com.cinema.model.dto.OrderResponseDto;
@@ -34,16 +33,14 @@ public class OrderController {
 
     @PostMapping("/complete")
     public void completeOrder(@RequestParam Long userId) {
-        User user = userService.get(userId)
-                .orElseThrow(() -> new DataProcessingException("User don't exist, id=" + userId));
+        User user = userService.get(userId);
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         orderService.completeOrder(shoppingCart);
     }
 
     @GetMapping
     public List<OrderResponseDto> getAllOrdersByUserId(@RequestParam Long userId) {
-        User user = userService.get(userId)
-                .orElseThrow(() -> new DataProcessingException("User don't exist, id=" + userId));
+        User user = userService.get(userId);
         return orderService.getOrdersHistory(user).stream()
                 .map(orderMapper::makeDto)
                 .collect(Collectors.toList());
