@@ -5,7 +5,8 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class EmailValidator implements ConstraintValidator<EmailValidation, String> {
-    private final String EMAIL_VALIDATION_REGEX = "\\w+@[a-z]+\\.[a-z]+";
+    private static final String EMAIL_VALIDATION_REGEX = "\\w+@[a-z]+\\.[a-z]+";
+
     @Override
     public boolean isValid(String contactField,
                            ConstraintValidatorContext cxt) {
