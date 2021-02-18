@@ -1,7 +1,13 @@
 package com.cinema.model.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class MovieRequestDto {
+    @NotNull(message = "Title cant be NULL")
+    @Size(min = 1, message = "Title must be longer than 0")
     private String title;
+    @NotNull(message = "Description cant be NULL")
     private String description;
 
     public String getTitle() {
