@@ -1,6 +1,6 @@
-package com.cinema.lib;
+package com.cinema.lib.annotations;
 
-import com.cinema.util.PasswordValidator;
+import com.cinema.lib.PasswordValidator;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

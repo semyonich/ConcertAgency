@@ -7,6 +7,7 @@ import com.cinema.service.mapper.CinemaHallMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,8 @@ public class CinemaHallController {
     }
 
     @GetMapping
-    public List<CinemaHallResponseDto> getAllCinemaHalls() {
+    public List<CinemaHallResponseDto> getAllCinemaHalls(Authentication auth) {
+        System.out.println(auth);
         return cinemaHallService.getAll().stream()
                 .map(cinemaHallMapper::makeDto)
                 .collect(Collectors.toList());
