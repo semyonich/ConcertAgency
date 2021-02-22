@@ -1,5 +1,6 @@
 package com.cinema.controller;
 
+import com.cinema.exception.DataProcessingException;
 import com.cinema.model.ShoppingCart;
 import com.cinema.model.User;
 import com.cinema.model.dto.OrderResponseDto;
@@ -36,6 +37,9 @@ public class OrderController {
         String email = authentication.getName();
         User user = userService.findByEmail(email).get();
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
+        if (shoppingCart.getTickets().isEmpty()) {
+            throw new DataProcessingException("Your cart is empty");
+        }
         orderService.completeOrder(shoppingCart);
     }
 

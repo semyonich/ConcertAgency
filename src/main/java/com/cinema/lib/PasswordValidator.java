@@ -1,6 +1,6 @@
-package com.cinema.util;
+package com.cinema.lib;
 
-import com.cinema.lib.PasswordValidation;
+import com.cinema.lib.annotations.PasswordValidation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapperImpl;

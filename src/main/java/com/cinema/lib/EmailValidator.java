@@ -1,6 +1,6 @@
-package com.cinema.util;
+package com.cinema.lib;
 
-import com.cinema.lib.EmailValidation;
+import com.cinema.lib.annotations.EmailValidation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

@@ -15,6 +15,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @ComponentScan(basePackages = {
         "com.cinema.dao",
         "com.cinema.service",
+        "com.cinema.util",
         "com.cinema.security"})
 public class AppConfig {
     private final Environment environment;

@@ -1,6 +1,6 @@
-package com.cinema.lib;
+package com.cinema.lib.annotations;
 
-import com.cinema.util.EmailValidator;
+import com.cinema.lib.EmailValidator;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

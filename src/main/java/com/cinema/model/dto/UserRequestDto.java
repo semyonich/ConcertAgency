@@ -1,7 +1,7 @@
 package com.cinema.model.dto;
 
-import com.cinema.lib.EmailValidation;
-import com.cinema.lib.PasswordValidation;
+import com.cinema.lib.annotations.EmailValidation;
+import com.cinema.lib.annotations.PasswordValidation;
 
 @PasswordValidation.List({
         @PasswordValidation(
