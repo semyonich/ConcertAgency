@@ -33,7 +33,6 @@ public class CinemaHallController {
 
     @GetMapping
     public List<CinemaHallResponseDto> getAllCinemaHalls(Authentication auth) {
-        System.out.println(auth);
         return cinemaHallService.getAll().stream()
                 .map(cinemaHallMapper::makeDto)
                 .collect(Collectors.toList());

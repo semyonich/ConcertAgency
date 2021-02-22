@@ -1,6 +1,5 @@
 package com.cinema.security;
 
-import com.cinema.exception.DataProcessingException;
 import com.cinema.model.User;
 import com.cinema.service.UserService;
 import java.util.List;
@@ -23,11 +22,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         User user = userService.findByEmail(name)
-                .orElseThrow(() -> new DataProcessingException("User don't exist"));
+                .orElseThrow(() -> new UsernameNotFoundException("User don't exist"));
         org.springframework.security.core.userdetails.User.UserBuilder userBuilder =
                 org.springframework.security.core.userdetails.User.withUsername(user.getEmail());
         List<GrantedAuthority> authoritySet = user.getRoles().stream()
-                .map(r -> new SimpleGrantedAuthority(r.getName().name()))
+                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getName().name()))
                 .collect(Collectors.toList());
         return userBuilder.password(user.getPassword()).authorities(authoritySet).build();
     }

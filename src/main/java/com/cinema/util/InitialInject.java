@@ -36,9 +36,8 @@ public class InitialInject {
         User admin = new User();
         admin.setEmail(ADMIN_EMAIL);
         admin.setPassword(ADMIN_PWD);
-        Role adminRole = roleService.getRoleByName(RoleName.ROLE_ADMIN.name());
+        Role adminRole = roleService.getRoleByName(RoleName.ADMIN.name());
         List<Role> adminRoles = new ArrayList<>();
-        System.out.println(adminRole);
         adminRoles.add(adminRole);
         admin.setRoles(adminRoles);
         admin = userService.add(admin);
