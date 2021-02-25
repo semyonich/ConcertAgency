@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InitialInject {
-    private static final String ADMIN_EMAIL = "serhii@gmail.com";
+    private static final String ADMIN_EMAIL = "admin";
     private static final String ADMIN_PWD = "1234";
     private final RoleService roleService;
     private final UserService userService;
