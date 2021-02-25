@@ -73,7 +73,7 @@ All data is transferred as JSON. Every User can have multiple Roles
   Data format: `{"id" : "order_id","tickets" : "order_ticket_id's",
   "orderDate" : "DD.MM.YYYY HH.MM","userEmail" : "user_email"}`<br> 
   Access granted for authenticated users.
-  # To start the project you need: <br>
+## To start the project you need: <br>
 - Download and install the [JDK](https://www.oracle.com/java/technologies/javase-downloads.html "Download JDK") <br>
 - Download and install Apache [Tomcat](https://tomcat.apache.org/download-90.cgi "Download Tomcat") <br>
 - Download and install [MySQL Server](https://dev.mysql.com/downloads/ "Download MySQL")<br>
