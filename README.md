@@ -11,7 +11,8 @@ All these features are realized with:
 - Java (Service layer)
 - Spring MVC (Controllers layer)
 - Spring Security (Authentication/Authorization)<br>
-All data is transferred as JSON.
+
+All data is transferred as JSON. Every User can have multiple Roles
 
 ## Available endpoints, their description and Role access
 - /register<br> New User registration endpoint<br>
